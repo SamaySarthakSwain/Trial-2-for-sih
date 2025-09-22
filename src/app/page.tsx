@@ -166,9 +166,9 @@ export default function Dashboard() {
             <div className="flex items-center gap-2">
               <Avatar>
                 <AvatarImage src="https://picsum.photos/seed/1/40/40" />
-                <AvatarFallback>JD</AvatarFallback>
+                <AvatarFallback>SS</AvatarFallback>
               </Avatar>
-              <span>John Doe</span>
+              <span>Samay Sarthak Swain</span>
             </div>
           </SidebarFooter>
         </Sidebar>
@@ -344,5 +344,3 @@ export default function Dashboard() {
     </SidebarProvider>
   );
 }
-
-    
