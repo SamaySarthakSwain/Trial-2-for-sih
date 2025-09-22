@@ -55,7 +55,7 @@ export default function Dashboard() {
               <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
                 <Shield className="text-primary-foreground" />
               </div>
-              <span className="text-lg font-semibold">Road Guardian</span>
+              <span className="text-lg font-semibold">SafeX</span>
             </div>
           </SidebarHeader>
           <SidebarContent>

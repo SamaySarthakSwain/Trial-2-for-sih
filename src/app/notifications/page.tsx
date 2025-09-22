@@ -27,7 +27,7 @@ const notifications = [
     {
         icon: <Bell className="w-5 h-5 text-gray-400" />,
         title: "System Update",
-        description: "Road Guardian has been updated with the latest safety protocols.",
+        description: "SafeX has been updated with the latest safety protocols.",
         time: "1d ago"
     }
 ]
