@@ -245,7 +245,7 @@ export default function Dashboard() {
                      <CardDescription>
                       Live feed from the driver-facing camera.
                     </CardDescription>
-                  </Header>
+                  </CardHeader>
                   <CardContent>
                     <div className="relative aspect-video bg-muted rounded-md">
                        <video ref={videoRef} className="w-full h-full object-cover rounded-md" autoPlay muted playsInline />
