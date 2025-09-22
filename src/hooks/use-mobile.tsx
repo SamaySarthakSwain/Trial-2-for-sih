@@ -1,3 +1,4 @@
+
 import * as React from "react"
 
 const MOBILE_BREAKPOINT = 768
@@ -11,13 +12,15 @@ export function useIsMobile() {
       setIsMobile(mql.matches)
     }
 
-    // Set the initial value
-    onChange();
-
     mql.addEventListener("change", onChange)
     
+    // Set the initial value after the first render on the client
+    onChange();
+
     return () => mql.removeEventListener("change", onChange)
   }, [])
 
   return isMobile
 }
+
+    

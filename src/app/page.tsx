@@ -76,6 +76,8 @@ export default function Dashboard() {
             description: 'Please enable camera permissions in your browser settings to use this app.',
           });
         }
+      } else {
+        setHasCameraPermission(false);
       }
     };
 
@@ -143,17 +145,17 @@ export default function Dashboard() {
                 <SidebarMenuSub>
                   <SidebarMenuSubItem>
                     <SidebarMenuSubButton>
-                      Gajapati Nagar
+                      Nearby Reports
+                    </SidebarMenuSubButton>
+                  </SidebarMenuSubItem>
+                   <SidebarMenuSubItem>
+                    <SidebarMenuSubButton>
+                      Gajapati Nagar: Minor collision
                     </SidebarMenuSubButton>
                   </SidebarMenuSubItem>
                   <SidebarMenuSubItem>
                     <SidebarMenuSubButton>
-                      Gandhi Nagar
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                  <SidebarMenuSubItem>
-                    <SidebarMenuSubButton>
-                      Aska Road
+                      Aska Road: Heavy traffic
                     </SidebarMenuSubButton>
                   </SidebarMenuSubItem>
                 </SidebarMenuSub>
@@ -279,11 +281,13 @@ export default function Dashboard() {
                   <CardContent>
                     <div className="relative aspect-video bg-muted rounded-md">
                        <video ref={videoRef} className="w-full h-full object-cover rounded-md" autoPlay muted playsInline />
-                      <div className="absolute top-2 right-2 flex items-center gap-2">
-                        <Badge variant={hasCameraPermission ? 'default' : 'destructive'} className="bg-opacity-70 backdrop-blur-sm">
-                           <Camera className="w-3 h-3 mr-1" /> {hasCameraPermission ? 'Live' : 'No Camera'}
-                        </Badge>
-                      </div>
+                      {hasCameraPermission !== null && (
+                        <div className="absolute top-2 right-2 flex items-center gap-2">
+                          <Badge variant={hasCameraPermission ? 'default' : 'destructive'} className="bg-opacity-70 backdrop-blur-sm">
+                            <Camera className="w-3 h-3 mr-1" /> {hasCameraPermission ? 'Live' : 'No Camera'}
+                          </Badge>
+                        </div>
+                      )}
                     </div>
                      {hasCameraPermission === false && (
                         <Alert variant="destructive" className="mt-4">
@@ -340,3 +344,5 @@ export default function Dashboard() {
     </SidebarProvider>
   );
 }
+
+    
