@@ -50,7 +50,7 @@ import Image from 'next/image';
 
 export default function Dashboard() {
   const { toast } = useToast();
-  const [hasCameraPermission, setHasCameraPermission] = useState<boolean | null>(null);
+  const [hasCameraPermission, setHasCameraPermission] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [startPoint, setStartPoint] = useState('');
   const [endPoint, setEndPoint] = useState('');
@@ -59,7 +59,7 @@ export default function Dashboard() {
   
   useEffect(() => {
     const getCameraPermission = async () => {
-      if (typeof window !== 'undefined' && navigator.mediaDevices) {
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         try {
           const stream = await navigator.mediaDevices.getUserMedia({ video: true });
           setHasCameraPermission(true);
@@ -78,6 +78,11 @@ export default function Dashboard() {
         }
       } else {
         setHasCameraPermission(false);
+        toast({
+            variant: 'destructive',
+            title: 'Camera Not Supported',
+            description: 'Your browser does not support camera access.',
+          });
       }
     };
 
@@ -281,15 +286,13 @@ export default function Dashboard() {
                   <CardContent>
                     <div className="relative aspect-video bg-muted rounded-md">
                        <video ref={videoRef} className="w-full h-full object-cover rounded-md" autoPlay muted playsInline />
-                      {hasCameraPermission !== null && (
                         <div className="absolute top-2 right-2 flex items-center gap-2">
                           <Badge variant={hasCameraPermission ? 'default' : 'destructive'} className="bg-opacity-70 backdrop-blur-sm">
                             <Camera className="w-3 h-3 mr-1" /> {hasCameraPermission ? 'Live' : 'No Camera'}
                           </Badge>
                         </div>
-                      )}
                     </div>
-                     {hasCameraPermission === false && (
+                     {!hasCameraPermission && (
                         <Alert variant="destructive" className="mt-4">
                           <AlertTitle>Camera Access Required</AlertTitle>
                           <AlertDescription>
