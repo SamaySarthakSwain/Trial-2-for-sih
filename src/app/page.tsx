@@ -143,7 +143,17 @@ export default function Dashboard() {
                 <SidebarMenuSub>
                   <SidebarMenuSubItem>
                     <SidebarMenuSubButton>
-                      Nearby Reports
+                      Gajapati Nagar
+                    </SidebarMenuSubButton>
+                  </SidebarMenuSubItem>
+                  <SidebarMenuSubItem>
+                    <SidebarMenuSubButton>
+                      Gandhi Nagar
+                    </SidebarMenuSubButton>
+                  </SidebarMenuSubItem>
+                  <SidebarMenuSubItem>
+                    <SidebarMenuSubButton>
+                      Aska Road
                     </SidebarMenuSubButton>
                   </SidebarMenuSubItem>
                 </SidebarMenuSub>
@@ -330,5 +340,3 @@ export default function Dashboard() {
     </SidebarProvider>
   );
 }
-
-    
