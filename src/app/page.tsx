@@ -135,7 +135,7 @@ export default function Dashboard() {
                 <CardContent>
                   <div className="aspect-video bg-muted rounded-md overflow-hidden">
                     <iframe
-                      src="https://maps.google.com/maps?q=Berhampur,Odisha&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                      src="https://maps.google.com/maps?q=Berhampur,Odisha&t=&z=13&ie=UTF8&iwloc=&output=embed&layer=t"
                       width="100%"
                       height="100%"
                       frameBorder="0"
