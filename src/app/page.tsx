@@ -133,8 +133,16 @@ export default function Dashboard() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="aspect-video bg-muted rounded-md flex items-center justify-center">
-                    <p className="text-muted-foreground">Map will be here</p>
+                  <div className="aspect-video bg-muted rounded-md overflow-hidden">
+                    <iframe
+                      src="https://maps.google.com/maps?q=Berhampur,Odisha&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                      width="100%"
+                      height="100%"
+                      frameBorder="0"
+                      scrolling="no"
+                      marginHeight={0}
+                      marginWidth={0}
+                    ></iframe>
                   </div>
                 </CardContent>
               </Card>
