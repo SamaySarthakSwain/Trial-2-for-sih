@@ -13,6 +13,9 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarInset,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+  SidebarMenuSubButton,
 } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -115,7 +118,7 @@ export default function Dashboard() {
               <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
                 <Shield className="text-primary-foreground" />
               </div>
-              <span className="text-lg font-semibold">Black Box</span>
+              <span className="text-lg font-semibold">Road Guardian</span>
             </div>
           </SidebarHeader>
           <SidebarContent>
@@ -137,6 +140,13 @@ export default function Dashboard() {
                   <Bell />
                   Notifications
                 </SidebarMenuButton>
+                <SidebarMenuSub>
+                  <SidebarMenuSubItem>
+                    <SidebarMenuSubButton>
+                      Nearby Reports
+                    </SidebarMenuSubButton>
+                  </SidebarMenuSubItem>
+                </SidebarMenuSub>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarContent>
@@ -181,6 +191,16 @@ export default function Dashboard() {
                     <Button onClick={handleFindRoute} disabled={loadingRoute}>
                       {loadingRoute ? 'Finding Route...' : 'Find Route'}
                     </Button>
+                    <div className="relative h-[400px] w-full bg-muted rounded-md overflow-hidden">
+                      <iframe
+                          width="100%"
+                          height="100%"
+                          style={{ border: 0 }}
+                          loading="lazy"
+                          allowFullScreen
+                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60032.9597799539!2d84.75538464973802!3d19.30390999581895!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a3d5113645e5863%3A0x631523d42013146!2sBrahmapur%2C%20Odisha%2C%20India!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus&layer=t">
+                      </iframe>
+                    </div>
                     {routes && (
                       <div className="flex flex-col gap-4 mt-4">
                          <h3 className="text-lg font-semibold">Suggested Routes</h3>
@@ -310,3 +330,5 @@ export default function Dashboard() {
     </SidebarProvider>
   );
 }
+
+    
