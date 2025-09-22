@@ -23,10 +23,11 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
-
+import { getRoutes, RouteDetails } from '@/ai/flows/get-routes-flow';
 import {
   FileText,
   User,
@@ -38,7 +39,8 @@ import {
   HeartPulse,
   Thermometer,
   Cloudy,
-  Waypoints
+  Waypoints,
+  Route
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
@@ -47,6 +49,10 @@ export default function Dashboard() {
   const { toast } = useToast();
   const [hasCameraPermission, setHasCameraPermission] = useState<boolean | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [startPoint, setStartPoint] = useState('');
+  const [endPoint, setEndPoint] = useState('');
+  const [routes, setRoutes] = useState<RouteDetails[] | null>(null);
+  const [loadingRoute, setLoadingRoute] = useState(false);
   
   useEffect(() => {
     const getCameraPermission = async () => {
@@ -72,6 +78,32 @@ export default function Dashboard() {
 
     getCameraPermission();
   }, [toast]);
+
+  const handleFindRoute = async () => {
+    if (!startPoint || !endPoint) {
+      toast({
+        variant: 'destructive',
+        title: 'Missing Information',
+        description: 'Please enter both a starting and ending point.',
+      });
+      return;
+    }
+    setLoadingRoute(true);
+    setRoutes(null);
+    try {
+      const result = await getRoutes({ start: startPoint, end: endPoint });
+      setRoutes(result.routes);
+    } catch (error) {
+      console.error('Error finding route:', error);
+      toast({
+        variant: 'destructive',
+        title: 'Error Finding Route',
+        description: 'Could not fetch route suggestions. Please try again later.',
+      });
+    } finally {
+      setLoadingRoute(false);
+    }
+  };
 
 
   return (
@@ -133,16 +165,47 @@ export default function Dashboard() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="aspect-video bg-muted rounded-md overflow-hidden">
-                    <iframe
-                      src="https://maps.google.com/maps?q=Berhampur,Odisha&t=&z=13&ie=UTF8&iwloc=&output=embed&layer=t"
-                      width="100%"
-                      height="100%"
-                      frameBorder="0"
-                      scrolling="no"
-                      marginHeight={0}
-                      marginWidth={0}
-                    ></iframe>
+                  <div className="flex flex-col gap-4">
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <Input 
+                        placeholder="Start Point" 
+                        value={startPoint}
+                        onChange={(e) => setStartPoint(e.target.value)}
+                      />
+                      <Input 
+                        placeholder="End Point" 
+                        value={endPoint}
+                        onChange={(e) => setEndPoint(e.target.value)}
+                      />
+                    </div>
+                    <Button onClick={handleFindRoute} disabled={loadingRoute}>
+                      {loadingRoute ? 'Finding Route...' : 'Find Route'}
+                    </Button>
+                    {routes && (
+                      <div className="flex flex-col gap-4 mt-4">
+                         <h3 className="text-lg font-semibold">Suggested Routes</h3>
+                        {routes.map((route, index) => (
+                           <Card key={index}>
+                              <CardHeader>
+                                <CardTitle className="flex items-center gap-2 text-base">
+                                  <Route className="w-5 h-5" />
+                                  Route {index + 1}: {route.summary}
+                                  {(route.isFastest || route.isSafest) && (
+                                    <div className="flex gap-2">
+                                      {route.isFastest && <Badge variant="secondary">Fastest</Badge>}
+                                      {route.isSafest && <Badge>Safest</Badge>}
+                                    </div>
+                                  )}
+                                </CardTitle>
+                                <CardDescription>{route.duration}</CardDescription>
+                              </CardHeader>
+                              <CardContent>
+                                <p className="text-sm">{route.details}</p>
+                              </CardContent>
+                           </Card>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </CardContent>
               </Card>
@@ -182,7 +245,7 @@ export default function Dashboard() {
                      <CardDescription>
                       Live feed from the driver-facing camera.
                     </CardDescription>
-                  </CardHeader>
+                  </Header>
                   <CardContent>
                     <div className="relative aspect-video bg-muted rounded-md">
                        <video ref={videoRef} className="w-full h-full object-cover rounded-md" autoPlay muted playsInline />
